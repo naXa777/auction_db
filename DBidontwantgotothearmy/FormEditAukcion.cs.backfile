@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace DBidontwantgotothearmy
+{
+    public partial class FormEditAukcion : Form
+    {
+        SqlDataAdapter sda;
+        BindingSource bs;
+
+        public FormEditAukcion()
+        {
+            InitializeComponent();
+        }
+
+        private void FormEditAukcion_Load(object sender, EventArgs e)
+        {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "aukcionDBDataSet.Аукцион". При необходимости она может быть перемещена или удалена.
+            sda = new SqlDataAdapter(new SqlCommand("SELECT Название, Место_Проведения, Краткое_Описание, Время_Начала, Время_Окончания FROM Аукцион"));
+            //this.аукционTableAdapter.Fill(this.aukcionDBDataSet.Аукцион);
+            bs = new BindingSource(aukcionDBDataSet, "Аукцион");
+            bs.
+            dataGridView1.DataSource = bs;
+            sda.Fill(bs);
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            Validate();
+            //аукционBindingSource.EndEdit();
+            sda.Update(aukcionDBDataSet.Аукцион);
+        }
+    }
+}
